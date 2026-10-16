@@ -1,0 +1,40 @@
+# Environment secrets
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+
+# Frontend dependencies and build
+auth-front/node_modules/
+auth-front/dist/
+
+# Backend Maven build output
+auth-backend/target/
+
+# TypeScript generated files
+auth-front/*.tsbuildinfo
+auth-front/**/*.tsbuildinfo
+
+# IDE files
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Local-only Maven wrapper cache
+auth-backend/.mvn/wrapper/maven-wrapper.jar
+
+
+# TypeScript build cache
+auth-frontend/*.tsbuildinfo
