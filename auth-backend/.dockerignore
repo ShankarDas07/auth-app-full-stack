@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+.idea/
+.git/
+.DS_Store
+target/
+*.log
