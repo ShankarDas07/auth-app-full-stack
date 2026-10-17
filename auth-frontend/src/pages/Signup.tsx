@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
-import { Mail, Lock, User, Github, Chrome } from "lucide-react";
-import React, { useState, type FormEvent } from "react";
+import { Mail, Lock, User } from "lucide-react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import type RegisterData from "@/models/RegisterData";
 import { registerUser } from "@/services/AuthService";
@@ -18,8 +18,6 @@ function Signup() {
     password: "",
   });
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 

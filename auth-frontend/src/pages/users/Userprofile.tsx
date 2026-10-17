@@ -90,7 +90,7 @@ function Userprofile() {
                 <Input
                   id="name"
                   value={user?.name}
-                  onChange={(e) => {}}
+                  onChange={() => {}}
                   className="rounded-xl"
                 />
               </div>
