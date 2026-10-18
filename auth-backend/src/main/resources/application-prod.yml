@@ -70,7 +70,7 @@ security:
     cookie-secure: ${JWT_COOKIE_SECURE:true}
     cookie-http-only: ${JWT_COOKIE_HTTP_ONLY}
     cookie-same-site: ${JWT_COOKIE_SAME_SITE}
-    cookie-domain: ${JWT_COOKIE_DOMAIN}
+    cookie-domain: ${JWT_COOKIE_DOMAIN:}   # <-- ei line
 
 
 app:
