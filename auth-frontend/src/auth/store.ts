@@ -63,7 +63,7 @@ const useAuth = create<AuthState>()(
           });
         }
       },
-      logout: async (_silent = false) => {
+      logout: async (silent = false) => {
         try {
           //   if (!silent) {
           //     await logoutUser();

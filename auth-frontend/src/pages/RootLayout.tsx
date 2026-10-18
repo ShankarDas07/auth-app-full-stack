@@ -4,7 +4,15 @@ import { Toaster } from "react-hot-toast";
 function RootLayout() {
   return (
     <div>
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "var(--card)",
+            color: "var(--card-foreground)",
+            border: "1px solid var(--border)",
+          },
+        }}
+      />
       <Navbar />
       <Outlet />
     </div>

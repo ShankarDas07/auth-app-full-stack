@@ -1,14 +1,13 @@
 import { Button } from "./ui/button";
 import { Chrome, Github } from "lucide-react";
 import { NavLink } from "react-router";
+import { BACKEND_URL } from "@/config/env";
 
 function OAuth2Buttons() {
   return (
     <div className="space-y-3">
       <NavLink
-        to={`${
-          import.meta.env.VITE_BASE_URL || "http://localhost:8080"
-        }/oauth2/authorization/google`}
+        to={`${BACKEND_URL}/oauth2/authorization/google`}
         className={"block"}
       >
         <Button
@@ -21,9 +20,7 @@ function OAuth2Buttons() {
       </NavLink>
 
       <NavLink
-        to={`${
-          import.meta.env.VITE_BASE_URL || "http://localhost:8080"
-        }/oauth2/authorization/github`}
+        to={`${BACKEND_URL}/oauth2/authorization/github`}
         className={"block"}
       >
         <Button

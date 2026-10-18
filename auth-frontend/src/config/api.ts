@@ -2,16 +2,16 @@ import useAuth from "@/auth/store";
 import { refreshToken } from "@/services/AuthService";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "./env";
 
 const apiClient = axios.create({
-  // baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api/v1",
-  baseURL: import.meta.env.VITE_API_BASE_URL || "https://auth-app-full-stack.onrender.com",
-
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
   withCredentials: true,
-  timeout: 10000,
+  // Render free instances sleep when idle; the first request can take 50s+
+  timeout: 60000,
 });
 
 //every request: before
@@ -40,17 +40,29 @@ function resolveQueue(newToken: string) {
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
+    // No response at all: network error or timeout (e.g. Render is still waking up)
+    if (!error.response) {
+      toast.error(
+        "Cannot reach the server. It may be waking up, please try again in a few seconds."
+      );
+      return Promise.reject(error);
+    }
+
     const is401 = error.response.status === 401;
     const original = error.config;
-    console.log(original);
-    console.log("original retry: ", original._retry);
-    if (!is401 || original._retry) {
+
+    // Never try to refresh for the auth endpoints themselves,
+    // otherwise the refresh call would end up waiting for itself.
+    const isAuthCall = /\/auth\/(login|register|refresh)/.test(
+      original?.url ?? ""
+    );
+
+    if (!is401 || original._retry || isAuthCall) {
       //message:
 
-      if (error.response && error.response.data)
+      if (error.response.data)
         toast.error(error.response.data?.message || "An error occurred");
       console.error("API Error:", error.response.data);
-      console.error("Full error:", error);
 
       return Promise.reject(error);
     }
@@ -58,10 +70,9 @@ apiClient.interceptors.response.use(
     original._retry = true;
     //we will try to refresh the token:
     if (isRefreshing) {
-      console.log("added to queue");
       return new Promise((resolve, reject) => {
         queueRequest((newToken: string) => {
-          if (!newToken) return reject();
+          if (!newToken) return reject(error);
           original.headers.Authorization = `Bearer ${newToken}`;
           resolve(apiClient(original));
         });
@@ -72,7 +83,6 @@ apiClient.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      console.log("start refreshing...");
       const loginResponse = await refreshToken();
       const newToken = loginResponse.accessToken;
       if (!newToken) throw new Error("no access token received");
@@ -87,10 +97,10 @@ apiClient.interceptors.response.use(
       resolveQueue(newToken);
       original.headers.Authorization = `Bearer ${newToken}`;
       return apiClient(original);
-    } catch (error) {
-      resolveQueue("null");
+    } catch (refreshError) {
+      resolveQueue("");
       useAuth.getState().logout();
-      return Promise.reject(error);
+      return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
     }

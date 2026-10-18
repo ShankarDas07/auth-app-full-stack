@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
 import { NavLink, useNavigate } from "react-router";
 import useAuth from "@/auth/store";
+import ThemeToggle from "./ThemeToggle";
 
 function Navbar() {
   const checkLogin = useAuth((state) => state.checkLogin);
@@ -9,10 +10,10 @@ function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <nav className="py-5  dark:border-b border-gray-700 md:py-0 flex md:flex-row gap-4 md:gap-0 flex-col md:h-14 justify-around items-center    ">
+    <nav className="py-5 border-b border-border md:py-0 flex md:flex-row gap-4 md:gap-0 flex-col md:h-14 justify-around items-center    ">
       {/* brand */}
       <div className="font-semibold items-center flex gap-2">
-        <span className="inline-block text-center h-6 w-6 rounded-md bg-gradient-to-r from-primary to-primary/40">
+        <span className="inline-block text-center h-6 w-6 rounded-md bg-gradient-to-r from-primary to-primary/40 text-primary-foreground">
           {"A"}
         </span>
         <span className="text-base tracking-tight">Auth App</span>
@@ -58,6 +59,7 @@ function Navbar() {
             </NavLink>
           </>
         )}
+        <ThemeToggle />
       </div>
     </nav>
   );
