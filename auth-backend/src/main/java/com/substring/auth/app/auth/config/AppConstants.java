@@ -5,6 +5,7 @@ public class AppConstants {
 
     public static final String[] AUTH_PUBLIC_URLS = {
             "/api/v1/auth/**",
+            "/auth/**",
             "/v3/api-docs/**",
             "/swagger-ui.html",
             "/swagger-ui/**"
@@ -22,6 +23,8 @@ public class AppConstants {
     public static final String GUEST_ROLE = "GUEST";
 
 //    other project-related constants
-
-
 }
+
+
+
+
