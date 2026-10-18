@@ -2,11 +2,11 @@ spring:
   application:
     name: auth-app-backend
   profiles:
-    active: dev
+    active: prod
 
 
 server:
-  port: 8083
+  port: 8080
 
 
 #configurations

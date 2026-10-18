@@ -22,7 +22,6 @@ public class AuthBackend implements CommandLineRunner { // if you use non static
     @Autowired
     private RoleRepository roleRepository;
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(AuthBackend.class, args);
 	}
