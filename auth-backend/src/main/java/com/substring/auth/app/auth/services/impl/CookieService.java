@@ -36,7 +36,7 @@ public class CookieService {
     //create method to attach cookie to response.
     public void attachRefreshCookie(HttpServletResponse response, String value, int maxAge) {
 
-        logger.info("Attaching cookie with name: {} and value: {}", refreshTokenCookieName, value);
+//        logger.info("Attaching cookie with name: {} and value: {}", refreshTokenCookieName, value);
         var responseCookieBuilder = ResponseCookie.from(refreshTokenCookieName, value)
                 .httpOnly(cookieHttpOnly)
                 .secure(cookieSecure)
